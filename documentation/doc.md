@@ -3,9 +3,9 @@
 - Frontend zuerst bauen lassen in oberster POM mit mkdir damit ein Verzeichnis da ist , dann frontend POM dann Backend
   Alternative wäre webchar ist aber schwieriger
 - in Procfile wird festgelegt was Heroku ausführen soll
-``
-java.runtime.version=17
-``
+  ``
+  java.runtime.version=17
+  ``
 
 #Git
 - in git commits eintragen, warum wir etwas gemacht haben nicht was wir gemacht haben, das sieht man in den added files
@@ -26,3 +26,16 @@ java.runtime.version=17
 #LoginAnmeldung
 - Login: Token in UseState abspeichern
 - Logout: Token aus UseState löschen
+
+#Debugging
+- IntelliJ Käfer nur für BackendDebugging
+- Frontend Debugging im Browser mit Console log oder dem "schlechten" Debugging Feature dort
+- sehr hilfreich ist der Tab Netzwerkanalyse für Request/Status überwachung
+- Frontend Debugging mit React Plugin Add-On
+
+#Kommentare und Dokumentation
+- Kommentare sollten durch deutlichen/selbsterklärenden Code ersetzt werden
+- Dokumentation sollte immer geschrieben werden, wenn es nicht absolut offensichtlich ist was die Funktion tut, ist sozusagen der Vertrag was die Funktion tut
+
+#DTO Datentransfer Objekt
+- wir können einen Artikel definieren (Datenmodell) der für den Anwender verwendet wird, an die Prüfung anschließend wird dieser dann erst in das Datenbankobjekt (ShoppingListItem) umgeschrieben

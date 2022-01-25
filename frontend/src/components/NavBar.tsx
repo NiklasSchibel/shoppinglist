@@ -8,6 +8,7 @@ export default function NavBar(){
             <Link className={"nav-item"} to="/AddItem">AddItem</Link>
             <Link className={"nav-item"} to="/ShoppingList">ShoppingList</Link>
             <Link className={"nav-item"} to="/FullShoppingList">FullShoppingList</Link>
+            <Link className={"nav-item"} to="/Login">Login</Link>
         </div>
     )
 }
