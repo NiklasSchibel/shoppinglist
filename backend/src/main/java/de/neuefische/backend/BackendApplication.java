@@ -39,7 +39,7 @@ public class BackendApplication implements CommandLineRunner {
         final UserMongo user = UserMongo.builder()
                 .username("frank")
                 .password(encodedPassword)
-                .authorities(List.of(new SimpleGrantedAuthority(MongoUserDetailsService.AUTHORITY_API_READWRITE))).build();
+                .rights(List.of(MongoUserDetailsService.AUTHORITY_API_READWRITE)).build();
 
         try {
             repository.insert(user);
