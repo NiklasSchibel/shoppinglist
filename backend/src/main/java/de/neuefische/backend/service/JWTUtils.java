@@ -12,7 +12,7 @@ import java.util.Map;
 @Service
 public class JWTUtils {
 
-    final String secret = "der Secret wird eigentlich auf einer anderen (sicheren) Umgebung festgelegt und dann nur verwendet, aehnlich Heroku Config Variable";
+    static final String secret = "der Secret wird eigentlich auf einer anderen (sicheren) Umgebung festgelegt und dann nur verwendet, aehnlich Heroku Config Variable";
 
     public String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()

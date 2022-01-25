@@ -14,7 +14,6 @@ import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/shoppinglist")
-@CrossOrigin(origins = "*", allowedHeaders = "*") //erlaubt den zugriff von anderen URL Seiten, sollte am Ende raus!
 public class ShoppingListController {
 
     private final ShoppingListService shoppingListService;

@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/**").authenticated()
                 .antMatchers("/api/**").authenticated()
 //                .antMatchers("/**/Mongo").authenticated() //Authentication for Development disabled
-                .antMatchers("/**").permitAll()
+                .antMatchers("/auth/**").permitAll()
 
 //               zwei Zeilen darunter nicht verwenden falls LoginForm ohne Token
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

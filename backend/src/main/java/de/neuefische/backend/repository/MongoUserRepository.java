@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface MongoUserRepository extends MongoRepository<UserMongo, String> {
-    // Todo eventuel Optional hier wieder weg damit alles funktioniert?
     Optional<UserMongo> findByUsername(String username);
 }

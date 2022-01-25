@@ -44,7 +44,7 @@ public class UserMongo implements UserDetails {
     boolean credentialsNonExpired;
 
     // für Anwendungsfall User hat bestimmte ListItems
-    List<ShoppingListItem> myItems;
+//    List<ShoppingListItem> myItems;
 
     @Override
     @Transient

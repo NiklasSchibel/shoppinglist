@@ -11,35 +11,35 @@ import {deleteItemByID, getAllTodosTest, updateItem} from "../service/requestser
 
 
 interface FullShoppingListProps {
-
+    token: string
 }
 export default function FullShoppingList(props: FullShoppingListProps) {
-
-    const [items, setItems] = useState<Item[]>([])
+    const {token} = props;
+    const [itemsFullstack, setItemsFullstack] = useState<Item[]>([])
 
     useEffect(() => {
-        getAllTodosTest()
-            .then(items => setItems(items))
+        getAllTodosTest(token)
+            .then(items => setItemsFullstack(items))
             .catch(error => console.error(error))
     }, [])
 
     const handleAddOneToQuantityButtonFunc = (item: Item) => {
-        const newItems: Item[] = [...items];
+        const newItems: Item[] = [...itemsFullstack];
         if (newItems.find(i => i.id === item.id) !== undefined) {
             // @ts-ignore
             newItems.find(i => i.id === item.id).quantity++;
-            setItems(newItems);
+            setItemsFullstack(newItems);
             // @ts-ignore
             updateItem(newItems.find(i => i.id === item.id));
         }
     }
 
     const handleSubstractOneOfQuantityButtonFunc = (item: Item) => {
-        const newItems: Item[] = [...items];
+        const newItems: Item[] = [...itemsFullstack];
         if (newItems.find(i => i.id === item.id) !== undefined) {
             // @ts-ignore
             newItems.find(i => i.id === item.id).quantity--;
-            setItems(newItems);
+            setItemsFullstack(newItems);
             // @ts-ignore
             updateItem(newItems.find(i => i.id === item.id));
         }
@@ -47,12 +47,12 @@ export default function FullShoppingList(props: FullShoppingListProps) {
 
 
     const handleRemoveButtonFunc = (item: Item) => {
-        const newItems: Item[] = [...items];
+        const newItems: Item[] = [...itemsFullstack];
 
         if (newItems.find(i => i.id === item.id) !== undefined) {
             // @ts-ignore
             const reducedItems: Item[] = newItems.filter(items => items.id !== item.id);
-            setItems(reducedItems);
+            setItemsFullstack(reducedItems);
             deleteItemByID(item);
         }
     }
@@ -61,11 +61,11 @@ export default function FullShoppingList(props: FullShoppingListProps) {
     return (
         <div>
             <AddItemFullstack
-                items={items}
-                setItems={setItems}
+                items={itemsFullstack}
+                setItems={setItemsFullstack}
             />
             <div>
-                {items.map((item: Item, index) => (
+                {itemsFullstack.map((item: Item, index) => (
                     <div className='item-container' key={index}>
                         <AddIcon onClick={() => {
                             handleAddOneToQuantityButtonFunc(item)
