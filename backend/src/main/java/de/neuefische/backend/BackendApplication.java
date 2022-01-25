@@ -33,10 +33,10 @@ public class BackendApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        final String encodedPassword = encoder.encode("frank");
+        final String encodedPassword = encoder.encode("klaus");
 
         final UserMongo user = UserMongo.builder()
-                .username("frank")
+                .username("klaus")
                 .password(encodedPassword)
                 .rights(List.of(MongoUserDetailsService.AUTHORITY_API_READWRITE)).build();
 

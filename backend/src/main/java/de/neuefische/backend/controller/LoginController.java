@@ -33,7 +33,7 @@ public class LoginController {
             );
             return jwtService.createToken(new HashMap<>(), data.getName());
         } catch (AuthenticationException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid credentials");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid_credentials");
         }
     }
 }
