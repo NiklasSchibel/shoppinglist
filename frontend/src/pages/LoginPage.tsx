@@ -1,8 +1,6 @@
-import {Item} from "../models/ItemModel";
-import {useNavigate} from 'react-router-dom';
 import {Button, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
 import FormControl from '@mui/material/FormControl';
-import React, {ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useState} from "react";
+import React, {ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEventHandler, SetStateAction, useState} from "react";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import './LoginPage.scss';
 import {LoginData} from "../models/LoginData";
@@ -23,6 +21,7 @@ interface State {
 }
 
 export const LOCAL_STORAGE_KEY: string = "My_token_key"
+
 
 export default function LoginPage(props: LoginPageProps) {
     const {token, setToken} = props; //destruction, danach muss keine props mehr verwendet werden
@@ -69,17 +68,22 @@ export default function LoginPage(props: LoginPageProps) {
         };
 
 
-        // localStorage.setItem() mit key von oben
+        // localStorage.setItem() Alternative mit key von oben
         loginRequest(login).then((response: string)=>(setToken(response)));
-        console.log("This is the token if exists:" + token);
     }
+
+    const keyPressHandler: KeyboardEventHandler<HTMLDivElement>
+        = (event) => { //TypenDeklaration von oben klappt nicht! warum??
+        if (event.code === "Enter") {
+            handleSubmitButton();
+        }
+    };
 
     //Use react router navigate um nach dem anmelden auf die Main Page zu kommen
 
     return (
         <div className="LoginPage">
-            <h2 className="App-header">Login:</h2>
-            <h1>{token}</h1>
+            <h1>Login:</h1>
             <div className="InputData">
                 <TextField
                     id="outlined-name"
@@ -95,6 +99,7 @@ export default function LoginPage(props: LoginPageProps) {
                         type={values.showPassword ? 'text' : 'password'}
                         value={values.password}
                         onChange={handleChange('password')}
+                        onKeyPress={keyPressHandler}
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton

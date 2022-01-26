@@ -3,6 +3,8 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.LoginData;
 import de.neuefische.backend.service.JWTUtils;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +21,8 @@ import java.util.HashMap;
 public class LoginController {
     final AuthenticationManager authenticationManager;
     final JWTUtils jwtService;
+
+    private final static Log LOG = LogFactory.getLog(LoginController.class)
 
     public LoginController(AuthenticationManager authenticationManager, JWTUtils jwtService) {
         this.authenticationManager = authenticationManager;

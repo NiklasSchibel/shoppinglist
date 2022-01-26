@@ -1,9 +1,12 @@
 .LoginPage {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 .InputData{
   display: flex;
   flex-direction: row;
+}
+
+#outlined-name {
+  background-color: white;
 }

@@ -39,3 +39,11 @@
 
 #DTO Datentransfer Objekt
 - wir können einen Artikel definieren (Datenmodell) der für den Anwender verwendet wird, an die Prüfung anschließend wird dieser dann erst in das Datenbankobjekt (ShoppingListItem) umgeschrieben
+
+#Frontendtesting
+- Selenium
+
+#Logging
+
+
+-
