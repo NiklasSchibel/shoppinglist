@@ -1,21 +1,24 @@
 import {Item} from "../models/ItemModel";
 import AddItemFullstack from "../components/AddItemFullstack";
 import axios from 'axios'
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import EditIcon from "@mui/icons-material/Edit";
 import {Button} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {deleteItemByID, getAllTodosTest, updateItem} from "../service/requestserviceTest";
+import {AuthContext} from "../context/AuthProvider";
 
 
 interface FullShoppingListProps {
     token: string
 }
-export default function FullShoppingList(props: FullShoppingListProps) {
-    const {token} = props;
+export default function FullShoppingList() {
+    // const {token} = props;
     const [itemsFullstack, setItemsFullstack] = useState<Item[]>([])
+
+    const {token} = useContext(AuthContext)
 
     useEffect(() => {
         getAllTodosTest(token)
@@ -55,6 +58,11 @@ export default function FullShoppingList(props: FullShoppingListProps) {
             setItemsFullstack(reducedItems);
             deleteItemByID(item);
         }
+    }
+
+
+    if (!itemsFullstack){
+        return <h1>Loading...please login</h1>
     }
 
 

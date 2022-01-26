@@ -1,9 +1,19 @@
 import {Button, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
-import React, {ChangeEvent, ChangeEventHandler, Dispatch, KeyboardEventHandler, SetStateAction, useState} from "react";
+import React, {
+    ChangeEvent,
+    ChangeEventHandler,
+    Dispatch,
+    KeyboardEventHandler,
+    SetStateAction,
+    useContext,
+    useState
+} from "react";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import './LoginPage.scss';
 import {LoginData} from "../models/LoginData";
 import {loginRequest} from "../service/requestserviceTest";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/AuthProvider";
 
 
 interface LoginPageProps {
@@ -20,8 +30,8 @@ interface State {
 }
 
 
-export default function LoginPage(props: LoginPageProps) {
-    const {token, setToken} = props;
+export default function LoginPage() {
+    // const {token, setToken} = props;
     const [values, setValues] = useState<State>({
         amount: '',
         password: '',
@@ -31,7 +41,9 @@ export default function LoginPage(props: LoginPageProps) {
     });
     const [usernameValue, setUsernameValue] = useState<String>("");
 
+    const navigate = useNavigate()
 
+    const {setJwt} = useContext(AuthContext)
 
     const onChangeHandlerUserName: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
         = (event) => {
@@ -55,21 +67,27 @@ export default function LoginPage(props: LoginPageProps) {
         event.preventDefault();
     };
 
-    const handleSubmitButton: () => void = () => {
+    const onSubmitButton: () => void = () => {
         console.log("This is the Username: " + usernameValue)
         console.log("This is the Password: " + values.password)
         const login: LoginData = {
             name: usernameValue,
             password: values.password,
         };
-        loginRequest(login).then((response: string)=>(setToken(response)));
-        // if(token === null)
+        loginRequest(login)
+            // .then((response: string)=>(setToken(response)))
+            .then(response => response.data)
+            .then((data)=>{
+                setJwt(data)
+                navigate('/')
+            })
+            .catch((error)=>console.error("Error: while loginRequest to Backend"));
     }
 
     const keyPressHandler: KeyboardEventHandler<HTMLDivElement>
         = (event) => { //TypenDeklaration von oben klappt nicht! warum??
         if (event.code === "Enter") {
-            handleSubmitButton();
+            onSubmitButton();
         }
     };
 
@@ -107,7 +125,7 @@ export default function LoginPage(props: LoginPageProps) {
             </div>
             <Button className="button-submit"
                     variant="contained"
-                    onClick={handleSubmitButton}>
+                    onClick={onSubmitButton}>
                 Submit
             </Button>
         </div>

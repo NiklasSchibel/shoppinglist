@@ -40,15 +40,15 @@ export const loginRequest = (login: LoginData) =>
 
 // + loca
 // du kannst später aus dem TOken den Username extrahieren!!
-//Todo hier später weiter
+//Todo passt das mit token?{headers... Minute 21:54 im Video
 
-export const getAllTodosTest = (token: string) =>
+export const getAllTodosTest = (token?: string) =>
 
-    axios.get(  '/api/shoppinglist/test/Mongo', {
+    axios.get(  '/api/shoppinglist/test/Mongo', token?{
         headers: {
             "Authorization": "Bearer " + token
         }
-    }).then(response => response.data).catch((error) => {
+    }:{}).then(response => response.data).catch((error) => {
         console.log(error);
     })
 
