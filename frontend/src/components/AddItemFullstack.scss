@@ -1,5 +1,11 @@
 .add-item-box {
   display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.AddItemFields{
+  display: flex;
   flex-direction: row;
   gap: 1rem;
 }

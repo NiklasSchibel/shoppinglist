@@ -39,3 +39,38 @@
 
 #DTO Datentransfer Objekt
 - wir können einen Artikel definieren (Datenmodell) der für den Anwender verwendet wird, an die Prüfung anschließend wird dieser dann erst in das Datenbankobjekt (ShoppingListItem) umgeschrieben
+
+#Frontend testing
+- Selenium
+
+#Logging
+````
+private final static Log LOG = LogFactory.getLog(LoginController.class);
+LOG.debug("login(" + data.getName() + ")");
+LOG.info("LoginController initialized");
+````
+
+Achtung Log Dateien dürfen nicht sicherheitsrelevante Daten (z.B. Passwörter veröffentlichen)
+
+- jede Exception die geworfen wird sollte auch ein LOG Eintrag schreiben
+- jede If Abfrage die zum Beispiel username != null abfragt sollte auch einen LOG eintragen, da dieser Fall eigentlich nicht auftreten sollte, in den meisten Fällen wird der Log Eintrag also nicht aufgerufen
+- in jeden eigentlihc nicht normalen Fall ein Logging eintragen
+
+- run/debug configurations kann das aktive Profil auf "dev" gesetzt werden, dann wird die application-dev.properties Datei verwendet
+
+#Stacktracing
+````
+- throw new UnsupprtedOperationException("Code not yet implemented");
+````
+- Stacktrace beschreibt die Fehlerreihenfolge in einem Programm
+- bei Spring Fehlern immer ganz unten anfangen dass ist der relevante Teil, oben ist nur die gesamte Fehlerkette zu sehen
+- falls der unterste Fehler keinen Sinn macht, einen Fehler weiter oben anschauen
+````
+ catch (AuthenticationException e) {
+LOG.trace("invalid credentials of user:" + data.getName());
+throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid_credentials");
+````
+- Gute Möglichkeit durch das Werfen eines Fehlers, das Programm bewusst zu beenden, damit dieser ungewollte Zustand (eventuell größerer Programmierfehler oder Hacker) nicht weitergetragen wird
+
+#PostgreSQL
+-https://sqldbm.com/Home/

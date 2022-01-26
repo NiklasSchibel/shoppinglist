@@ -1,5 +1,5 @@
 import {Item} from "../models/ItemModel";
-import {ChangeEventHandler, Dispatch, KeyboardEventHandler, SetStateAction, useState} from "react";
+import {ChangeEventHandler, Dispatch, KeyboardEventHandler, SetStateAction, useContext, useState} from "react";
 import {Button} from "@mui/material";
 import TextField from '@mui/material/TextField';
 // @ts-ignore: or cast to : any
@@ -7,6 +7,7 @@ import {v4 as uuid} from 'uuid' ;
 import {Input} from '@mui/material';
 import './AddItemFullstack.scss';
 import {updateItem} from "../service/requestserviceTest";
+import {AuthContext} from "../context/AuthProvider";
 
 
 interface AddItemFullstackProps {
@@ -18,6 +19,8 @@ export default function AddItemFullstack(props: AddItemFullstackProps) {
     const {items, setItems} = props; //destruction, unnecessary to use "props." below
     const [inputValue, setInputValue] = useState<string>("");
     const [inputNumber, setInputNumber] = useState<string>("1");
+
+    const {token, jwtDecoded} = useContext(AuthContext)
 
     const handleAddButtonFunc: () => void = // hier steht nur die TypenDeklaration der Funktion
         () => {
@@ -40,14 +43,15 @@ export default function AddItemFullstack(props: AddItemFullstackProps) {
                 id: uuid(),
                 name: inputValue,
                 quantity: parseInt(inputNumber),
+                user: jwtDecoded?.sub || "defaultUser",
             };
 
             //ab hier Porblem da set und User auf der anderen Seite "FullStackShoppingList" stehen
             const newItems: Item[] = [...items, newItem];
             setItems(newItems);
             setInputValue("");
-            updateItem(newItem);
-        }; //ab zweite Zeile steht die eigentliche Funktion
+            updateItem(newItem, token);
+        };
 
     const checkIfEmpty: (stringInput: string) => boolean = (stringInput) => {
         return stringInput.trim() === "";
@@ -84,8 +88,10 @@ export default function AddItemFullstack(props: AddItemFullstackProps) {
 
     return (
         <div className="add-item">
-            <h2 className="App-header">AddItem:
-                <div className='add-item-box'>
+            {/*<h2 className="App-header">AddItem:*/}
+            <div className='add-item-box'>
+                <h1>Add Item</h1>
+                <div className="AddItemFields">
                     <TextField
                         value={inputNumber}
                         id="outlined-number"
@@ -96,20 +102,22 @@ export default function AddItemFullstack(props: AddItemFullstackProps) {
                         }}
                         onChange={onChangeHandlerQuantity}
                     />
-                    <Input
+                    <TextField
                         value={inputValue}
-                           onChange={onChangeHandler}
-                           onKeyPress={keyPressHandler}
-                           placeholder=""
+                        label="Name"
+                        variant="outlined"
+                        onChange={onChangeHandler}
+                        onKeyPress={keyPressHandler}
                     />
                     <Button variant="outlined"
                             onClick={handleAddButtonFunc}>AddItem
                     </Button>
                 </div>
-                {/*<Button className="button-back" onClick={handleNavigateButton}>*/}
-                {/*    back*/}
-                {/*</Button>*/}
-            </h2>
+            </div>
+            {/*<Button className="button-back" onClick={handleNavigateButton}>*/}
+            {/*    back*/}
+            {/*</Button>*/}
+            {/*</h2>*/}
         </div>
     )
 }

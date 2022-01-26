@@ -1,12 +1,19 @@
-import {Item} from "../models/ItemModel";
-import {useNavigate} from 'react-router-dom';
 import {Button, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField} from "@mui/material";
-import FormControl from '@mui/material/FormControl';
-import React, {ChangeEvent, ChangeEventHandler, Dispatch, SetStateAction, useState} from "react";
+import React, {
+    ChangeEvent,
+    ChangeEventHandler,
+    Dispatch,
+    KeyboardEventHandler,
+    SetStateAction,
+    useContext,
+    useState
+} from "react";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import './LoginPage.scss';
 import {LoginData} from "../models/LoginData";
 import {loginRequest} from "../service/requestserviceTest";
+import {useNavigate} from "react-router-dom";
+import {AuthContext} from "../context/AuthProvider";
 
 
 interface LoginPageProps {
@@ -22,11 +29,9 @@ interface State {
     showPassword: boolean;
 }
 
-export const LOCAL_STORAGE_KEY: string = "My_token_key"
 
-export default function LoginPage(props: LoginPageProps) {
-    const {token, setToken} = props; //destruction, danach muss keine props mehr verwendet werden
-
+export default function LoginPage() {
+    // const {token, setToken} = props;
     const [values, setValues] = useState<State>({
         amount: '',
         password: '',
@@ -35,15 +40,21 @@ export default function LoginPage(props: LoginPageProps) {
         showPassword: false,
     });
     const [usernameValue, setUsernameValue] = useState<String>("");
-    // const [token, setToken] = useState<String>("default Test Token");//nicht hinzufügen wird über props übergeben
 
+    const navigate = useNavigate()
 
+    const {setJwt} = useContext(AuthContext)
 
     const onChangeHandlerUserName: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>
         = (event) => {
         event.preventDefault();
         setUsernameValue(event.target.value);
     }
+
+    const handleChange =
+        (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+            setValues({ ...values, [prop]: event.target.value });
+        };
 
     const handleClickShowPassword = () => {
         setValues({
@@ -55,31 +66,35 @@ export default function LoginPage(props: LoginPageProps) {
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-    const handleChange =
-        (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: event.target.value });
-        };
 
-    const handleSubmitButton: () => void = () => {
+    const onSubmitButton: () => void = () => {
         console.log("This is the Username: " + usernameValue)
         console.log("This is the Password: " + values.password)
         const login: LoginData = {
             name: usernameValue,
             password: values.password,
         };
-
-
-        // localStorage.setItem() mit key von oben
-        loginRequest(login).then((response: string)=>(setToken(response)));
-        console.log("This is the token if exists:" + token);
+        loginRequest(login)
+            // .then((response: string)=>(setToken(response)))
+            // .then(response => response.data)
+            .then((data)=>{
+                setJwt(data)
+                navigate('/FullShoppingList')
+            })
     }
+
+    const keyPressHandler: KeyboardEventHandler<HTMLDivElement>
+        = (event) => { //TypenDeklaration von oben klappt nicht! warum??
+        if (event.code === "Enter") {
+            onSubmitButton();
+        }
+    };
 
     //Use react router navigate um nach dem anmelden auf die Main Page zu kommen
 
     return (
         <div className="LoginPage">
-            <h2 className="App-header">Login:</h2>
-            <h1>{token}</h1>
+            <h1>Login:</h1>
             <div className="InputData">
                 <TextField
                     id="outlined-name"
@@ -87,31 +102,29 @@ export default function LoginPage(props: LoginPageProps) {
                     value={usernameValue}
                     onChange={onChangeHandlerUserName}
                 />
-
-                <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
-                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                    <OutlinedInput
-                        id="outlined-adornment-password"
-                        type={values.showPassword ? 'text' : 'password'}
-                        value={values.password}
-                        onChange={handleChange('password')}
-                        endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                >
-                                    {values.showPassword ? <VisibilityOff/> : <Visibility/>}
-                                </IconButton>
-                            </InputAdornment>
-                        }
-                        label="Password"
-                    />
-                </FormControl>
+                <TextField
+                    id="outlined-password-input"
+                    label="Password"
+                    // type="password"
+                    autoComplete="current-password"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    onKeyPress={keyPressHandler}
+                />
+                <IconButton
+                    id="ButtonVisibility"
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                >
+                    {values.showPassword ? <VisibilityOff/> : <Visibility/>}
+                </IconButton>
             </div>
-            <Button className="button-back" onClick={handleSubmitButton}>
+            <Button className="button-submit"
+                    variant="contained"
+                    onClick={onSubmitButton}>
                 Submit
             </Button>
         </div>
