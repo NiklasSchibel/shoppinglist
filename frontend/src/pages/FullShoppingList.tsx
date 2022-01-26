@@ -74,7 +74,7 @@ export default function FullShoppingList() {
             />
             <h1>Shopping List</h1>
             <div>
-                {itemsFullstack.map((item: Item, index) => (
+                {itemsFullstack.filter(items => items.user === jwtDecoded?.sub).map((item: Item, index) => (
                     <div className='item-container' key={index}>
                         <AddIcon onClick={() => {
                             handleAddOneToQuantityButtonFunc(item)

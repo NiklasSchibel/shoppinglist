@@ -79,7 +79,7 @@ export default function LoginPage() {
             // .then(response => response.data)
             .then((data)=>{
                 setJwt(data)
-                navigate('/')
+                navigate('/FullShoppingList')
             })
     }
 
