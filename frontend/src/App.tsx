@@ -17,6 +17,8 @@ interface AppProps {
 
 }
 
+interface AuthContext
+
 export default function App(props: AppProps) {
     const [items, setItems] = useState<Item[]>([]);
     const [token, setToken] = useState<string>("defaultTokenTest");

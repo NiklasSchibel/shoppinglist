@@ -19,6 +19,7 @@ so würden passwort und benutzername an github übermittelt (Sicherheitsproblem!
 
 - Rollen beinhalten Berechtigungen , API Schnittstellen fragen nach den Berechtigugen der User (nicht nach dessen Rolle ab), ist eine erleichterung nur mit Rollen zu arbeiten wird schnell zu kompliziert
 
+
 #JWT Token Library
 - Filter immer abschließen mit filterChain.doFilter(request,repsonse) z.B; damit die anderen Filter im Anschluss immer weiterlaufen können
 - immer Log eingaben schreiben im catch Error bereich des try catch Blocks damit die Suche später kleiner wird

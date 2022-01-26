@@ -62,3 +62,7 @@ in axios get vor erstem / noch "${BASEURL}"
 ```
 
 
+
+#Token
+- kann im UseState in der App gespeichert und an alle Komponenten übergeben werden (alternativ wäre auch LocalStorage möglich)
+- oder Video Idee mit Speichern im Context in React
