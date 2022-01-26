@@ -14,5 +14,5 @@ public class ShoppingListItem {
     private String id;
     private String name;
     private int quantity;
-//    private String ofUserName;
+    private String user;
 }

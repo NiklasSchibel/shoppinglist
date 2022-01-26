@@ -4,5 +4,5 @@ export interface Item {
     id: string;
     name: string;
     quantity: number;
-    // ofUserName: string;
+    user?: string;
 }

@@ -71,3 +71,6 @@ LOG.trace("invalid credentials of user:" + data.getName());
 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid_credentials");
 ````
 - Gute Möglichkeit durch das Werfen eines Fehlers, das Programm bewusst zu beenden, damit dieser ungewollte Zustand (eventuell größerer Programmierfehler oder Hacker) nicht weitergetragen wird
+
+#PostgreSQL
+-https://sqldbm.com/Home/

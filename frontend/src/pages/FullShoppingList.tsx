@@ -18,7 +18,7 @@ export default function FullShoppingList() {
     // const {token} = props;
     const [itemsFullstack, setItemsFullstack] = useState<Item[]>([])
 
-    const {token} = useContext(AuthContext)
+    const {token, jwtDecoded} = useContext(AuthContext)
 
     useEffect(() => {
         getAllTodosTest(token)
@@ -72,6 +72,7 @@ export default function FullShoppingList() {
                 items={itemsFullstack}
                 setItems={setItemsFullstack}
             />
+            <h1>Shopping List</h1>
             <div>
                 {itemsFullstack.map((item: Item, index) => (
                     <div className='item-container' key={index}>
@@ -96,6 +97,7 @@ export default function FullShoppingList() {
                     </div>
                 ))}
             </div>
+            <div>Liste von: {jwtDecoded?.sub?.toUpperCase()}</div>
         </div>
     )
 

@@ -76,12 +76,11 @@ export default function LoginPage() {
         };
         loginRequest(login)
             // .then((response: string)=>(setToken(response)))
-            .then(response => response.data)
+            // .then(response => response.data)
             .then((data)=>{
                 setJwt(data)
                 navigate('/')
             })
-            .catch((error)=>console.error("Error: while loginRequest to Backend"));
     }
 
     const keyPressHandler: KeyboardEventHandler<HTMLDivElement>
