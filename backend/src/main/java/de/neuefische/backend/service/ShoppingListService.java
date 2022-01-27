@@ -5,6 +5,7 @@ import de.neuefische.backend.model.ShoppingListItem;
 import de.neuefische.backend.repository.MongoDBItemRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class ShoppingListService {
     public ShoppingListItem updateShoppingListItem(ShoppingListItem item) {
         try {
             mongoDB.save(item);
+            LOG.info("Item mit ID: " + item.getId() + "wurde gespeichert");
         } catch (Exception e) {
             LOG.info("Item " + item.getName().toUpperCase() + " konnte nicht in der DB gespeichert werden");
         }
@@ -36,6 +38,7 @@ public class ShoppingListService {
 
     public ShoppingListItem deleteById(String id) {
         ShoppingListItem item = mongoDB.findById(id).orElseThrow();
+        LOG.info("Item mit ID: " + item.getId() + "wurde gelöscht");
         mongoDB.deleteById(id);
         return item;
 
@@ -43,6 +46,9 @@ public class ShoppingListService {
 
     public Optional<ShoppingListItem> getItemById(String id) {
         return mongoDB.findById(id);
+
+    }
+}
 
 //Todo: Service mit catch , sicherer machen?!
 //        und throws exception in public method zeile
@@ -55,16 +61,4 @@ public class ShoppingListService {
 //            //  Block of code to handle errors
 //        }
 //        return null;
-    }
-}
 
-//    public ShoppingListItem create(ShoppingListItem todo) {
-//    }
-
-
-//public void updateTodo(String id, Todo todo) {
-//        Todo tmp = getTodoById(id);
-//        todo.setId(id);
-//        this.todos.remove(tmp);
-//        this.todos.add(todo);
-//        }

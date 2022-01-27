@@ -33,7 +33,7 @@ export default function FullShoppingList() {
             newItems.find(i => i.id === item.id).quantity++;
             setItemsFullstack(newItems);
             // @ts-ignore
-            updateItem(newItems.find(i => i.id === item.id));
+            updateItem(newItems.find(i => i.id === item.id), token);
         }
     }
 
@@ -41,10 +41,15 @@ export default function FullShoppingList() {
         const newItems: Item[] = [...itemsFullstack];
         if (newItems.find(i => i.id === item.id) !== undefined) {
             // @ts-ignore
+            if(newItems.find(i => i.id === item.id).quantity === 1){
+                handleRemoveButtonFunc(item);
+                return;
+            }
+            // @ts-ignore
             newItems.find(i => i.id === item.id).quantity--;
             setItemsFullstack(newItems);
             // @ts-ignore
-            updateItem(newItems.find(i => i.id === item.id));
+            updateItem(newItems.find(i => i.id === item.id), token);
         }
     }
 
@@ -56,7 +61,7 @@ export default function FullShoppingList() {
             // @ts-ignore
             const reducedItems: Item[] = newItems.filter(items => items.id !== item.id);
             setItemsFullstack(reducedItems);
-            deleteItemByID(item);
+            deleteItemByID(item, token);
         }
     }
 
@@ -69,8 +74,8 @@ export default function FullShoppingList() {
     return (
         <div>
             <AddItemFullstack
-                items={itemsFullstack}
-                setItems={setItemsFullstack}
+                itemsFullstack={itemsFullstack}
+                setItemsFullstack={setItemsFullstack}
             />
             <h1>Shopping List</h1>
             <div>
