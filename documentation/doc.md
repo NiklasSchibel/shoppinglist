@@ -77,3 +77,4 @@ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid_credentials")
 
 #Login
 - weiterleiten auf Loginseite, probieren ob eingeloggt sonst catch und weiterleitung auf login
+

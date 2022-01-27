@@ -5,6 +5,7 @@ import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
 
 
+
 export const loginRequest = (login: LoginData) =>
     axios.post(`/auth/login`, login)
         .then(response => response.data)
@@ -12,7 +13,6 @@ export const loginRequest = (login: LoginData) =>
 
 
 export const getAllTodosTest = (token?: string) =>
-
     axios.get('/api/shoppinglist/test/Mongo', token ? {
         headers: {
             "Authorization": "Bearer " + token
@@ -30,7 +30,6 @@ export const updateItem = (item: Item, token?: string) => {
     } : {}).catch(console.error)
 }
 
-//todo delete funktioniert noch nicht
 export const deleteItemByID = (item: Item, token?: string) =>
     axios.delete(`/api/shoppinglist/test/Mongo/${item.id}`, token ? {
         headers: {
@@ -47,4 +46,5 @@ export const deleteItemByID = (item: Item, token?: string) =>
 //     (item) => {
 //         axios.get(`/api/shoppinglist/test/Mongo/${item.id}`).catch(console.error)
 //     }
+
 

@@ -21,6 +21,7 @@ export default function AddItemFullstack(props: AddItemFullstackProps) {
 
     const {token, jwtDecoded} = useContext(AuthContext)
 
+
     const handleAddButtonFunc: () => void =
         () => {
             if (parseInt(inputNumber) <= 0) {
