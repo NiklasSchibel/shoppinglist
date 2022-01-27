@@ -77,3 +77,12 @@ throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid_credentials")
 
 #Login
 - weiterleiten auf Loginseite, probieren ob eingeloggt sonst catch und weiterleitung auf login
+- Alternative: OAuth2 zum Beispiel mit Github oder Google
+- https://aaronparecki.com/oauth-2-simplified/
+Example: https://github.com/Droggelbecher92/ShopListExample/branches
+
+#Libraries
+https://nivo.rocks/line/ , Diagramme
+https://github.com/chenglou/react-motion  , Physik
+https://fabricweb.z5.web.core.windows.net/oufr/7.155.3/#/examples/card  ,mui für Windows
+
